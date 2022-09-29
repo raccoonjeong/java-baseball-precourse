@@ -13,10 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RefreeTest extends NsTest {
-    @Override
-    public void runMain() {
-        Application.main(new String[]{});
-    }
+
 
     @Test
     public void gestureTest() {
@@ -24,5 +21,13 @@ class RefreeTest extends NsTest {
         String[] param2 = {"1","3","5"};
         System.out.println(new Refree().gesture(param1, param2));
     }
+
+
+
+    @Override
+    public void runMain() {
+        Application.main(new String[]{});
+    }
+
 
 }

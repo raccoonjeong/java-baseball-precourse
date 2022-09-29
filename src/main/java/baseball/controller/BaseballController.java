@@ -8,21 +8,18 @@ import baseball.view.Output;
 
 public class BaseballController {
 
-    int[] target;
-
-    // 게임시작 요청받으면,
-    public void readyGame() {
-        // 컴퓨터에 랜덤숫자 생성하라고 명령
-        target = new RandomNumberMaker().makeTargetNumber();
-    }
-
     public void startGame() {
+
+        int[] target = new RandomNumberMaker().makeTargetNumber();
+
         // 인풋 받으라 view에 명령
         String input = new Input().input();
+
+        // 받은 인풋을 검증하라고 Model에 명령
         new RandomNumberValidator().allValidate(input);
 
-        String[] inputs = input.split("");
-        String result = new Refree().gesture(target, inputs);
+        String result = new Refree().gesture(target, input.split(""));
+
         new Output().output(result);
     }
 
