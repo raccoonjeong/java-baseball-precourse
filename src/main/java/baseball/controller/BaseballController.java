@@ -1,27 +1,58 @@
 package baseball.controller;
 
+import static baseball.view.Input.input;
+import static baseball.view.Output.output;
+
 import baseball.model.Numbers;
-import baseball.model.RandomNumberMaker;
-import baseball.model.RandomNumberValidator;
 import baseball.model.RandomNumbers;
 import baseball.model.Refree;
-import baseball.view.Input;
-import baseball.view.Output;
+import baseball.model.ResultDTO;
 
 public class BaseballController {
 
-    public void startGame() {
+    private RandomNumbers answerNumber;
+    private ResultDTO resultDTO;
 
-        RandomNumbers answerNumber = new RandomNumbers();
+    public void initializeGame() {
+        readyGame();
+        startGame();
+    }
 
-        // 인풋 받으라 view에 명령
-        String inputString = new Input().input();
+    private void readyGame() {
+        answerNumber =  new RandomNumbers();
+    }
 
-        Numbers inputNumber = new Numbers(inputString);
+    private void startGame() {
+        process();
+        result();
+    }
 
-        String result = new Refree().gesture(answerNumber, inputNumber);
+    private void process() {
+        Numbers inputNumber = new Numbers(input());
+        Refree refree = new Refree();
+        resultDTO = refree.gesture(answerNumber, inputNumber);
+    }
 
-        new Output().output(result);
+    private void result() {
+        output(resultDTO.getResult());
+
+        if (isGameOver()) {
+            startGame();
+        }
+
+        if (isPlayAgain()) {
+            initializeGame();
+        }
+    }
+
+    private boolean isGameOver() {
+        return resultDTO.getStrikeCount() != 3;
+    }
+
+    private boolean isPlayAgain() {
+        output("처음부터 다시 시작하려면 1을 입력하시오. 종료하려면 아무 키나 누르시오.");
+        String inputString = input();
+        return "1".equals(inputString);
     }
 
 }

@@ -21,25 +21,32 @@ public class Numbers {
     }
 
     private void validate(String str) {
+        validateLength(str);
+        validateFormat(str);
+        validateDuplicate(str);
+    }
+
+    public void validateLength(String str) {
         if (str.length() != 3) {
             throw new IllegalArgumentException("길이가 3이 아님");
         }
+    }
 
+    public void validateFormat(String str) {
         if (!str.matches("[+-]?\\d*(\\.\\d+)?")) {
             throw new IllegalArgumentException("숫자가 아님");
         }
+    }
 
-        String[] strs = str.split("");
+    public void validateDuplicate(String str) {
         Set set = new HashSet();
-
         for (int i = 0; i < 3; i++) {
-            set.add(Integer.valueOf(strs[i]));
+            set.add(Integer.valueOf(str.charAt(i)));
         }
 
         if (set.size() < 3) {
             throw new IllegalArgumentException("중복된 숫자가 있음");
         }
-
     }
 
 }
