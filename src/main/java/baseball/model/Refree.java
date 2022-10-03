@@ -1,23 +1,28 @@
 package baseball.model;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Refree {
 
     private int strikeCount;
     private int ballCount;
-    public ResultDTO gesture(RandomNumbers answer, Numbers input) {
 
-        List inputList = input.getList();
+    public ResultDTO gesture(List answer, List input) {
 
         for (int i = 0; i < 3; i++) {
-            int value = (int)inputList.get(i);
-            strikeCount = answer.isEqual(i, value) ? strikeCount + 1 : strikeCount;
-            ballCount = (!answer.isEqual(i, value) && answer.contains(value)) ? ballCount + 1 : ballCount;
+            int value = (int)input.get(i);
+
+            boolean isStrike = isEqual(answer, i, value);
+
+            strikeCount = isStrike ? strikeCount + 1 : strikeCount;
+            ballCount = (!isStrike && answer.contains(value)) ? ballCount + 1 : ballCount;
         }
 
         return new ResultDTO(strikeCount, ballCount);
-
     }
+
+    public boolean isEqual(List list, int index, int value) {
+        return list.indexOf(value) == index;
+    }
+
 }

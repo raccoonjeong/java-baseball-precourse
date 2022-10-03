@@ -16,6 +16,10 @@ public class ResultDTO {
     }
 
     private void countStrike() {
+        if (strikeCount > 0 && ballCount > 0) {
+            result += " ";
+        }
+
         if (strikeCount > 0) {
             result += (strikeCount + "스트라이크");
         }
@@ -28,8 +32,8 @@ public class ResultDTO {
     }
 
     public String getResult() {
-        countStrike();
         countBall();
+        countStrike();
 
         if (StringUtils.isBlank(result)) {
             result = "낫싱";
